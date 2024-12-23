@@ -8,120 +8,92 @@
             {% endif %}
         {% endif %}
         <div style="display: flex; gap: 15px;">
-        <div style="width: 50%;">
-            <img src="{{ auction.image_url }}" style="width: 100%; max-height: 500px; object-fit: contain; border-radius: 16px;">
-        </div>
-        <div style="width: 50%;">
-            <div class="project-info-box">
-                <h3>{{ auction.title }}</h3>
-                <p class="pt-4 pb-2 border-bottom"><b>Author: </b> {{ auction.user }}</p>
-                        <p class="pt-1 pb-2 border-bottom "><b>Current Bid: </b><span class="text-primary">${{ bid.amount }}</span><p>
-                            {% if auction.price %}
-                                <p class="pt-1 pb-2 border-bottom"><b>Price: </b>${{ auction.price }}
-                                </p>
-                            {% else %}
-                                <p class="pt-1 pb-2 border-bottom"><b>Price: </b>Not Specified</p>
-                            {% endif %}
-                        <p class="pt-1 pb-2 border-bottom"><b>Created at: </b> {{ auction.created_at }}</p>
-                        <p class="pt-1 pb-2 border-bottom"><b>Last Updated: </b> {{ bid.created_at }}</p>
-                        {% if auction.category %}
-                            <p class="pt-1 pb-2 border-bottom"><b>Category: </b> {{ auction.category | title }}</p>
-                        {% else %}
-                            <p class="pt-1 pb-2 border-bottom"><b>Category: </b> Not Listed.</p>
-                        {% endif %}
-
-                        {% if auction.winner is None %}
-                            <p><b>Status:</b><span class="text-success lead"> <strong>Available</strong></span>
-                            </p>
-                        {% else %}
-                            <p><b>Status:</b><span
-                                    class="text-danger lead"> <strong>Sold</strong></span></p>
-                        {% endif %}
-
-                        {% if user == bid.user %}
-                            {% if auction.winner is not None %}
-                                <h5 class="text-muted pt-3">{{ auction.bid_counter }} Bid(s) in total.
-                                    <span class="lead">Congratulations, {{ bid.user }}! 🎊</span></h5>
-                            {% else %}
-                                <h5 class="text-muted pt-3">{{ auction.bid_counter }} Bid(s) so far.
-                                    <span class="lead">Your bid is the current bid.</span></h5>
-                            {% endif %}
-                        {% else %}
-                            <h5 class="text-muted pt-3">{{ auction.bid_counter }} Bid(s) so far.</h5>
-                        {% endif %}
+            <div style="width: 50%;">
+                <img src="{{ auction.image_url }}" class="product-page-image">
             </div>
-        </div>
-        </div>
-        <div>
-            <p class="text-muted mb-1">{{ auction.description }}</p>
-        </div>
-        <div class="pl-4 pt-3">
-            
-            <div class="row">
-                <div class="col-md-5">
-                    
-
-                    <div class="project-info-box">
-                        
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-        <div class="col-md-5 pl-4 mx-left-auto">
-            {% if not auction.user == user %}
-                <form action="{% url 'update_bid' bid.id %}" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
+            <div style="width: 50%;">
+                <div class="project-info-box">
+                    <h3 class="product-page-title">{{ auction.title }}</h3>
+                    <p class="product-page-author"><b>Author: </b> {{ auction.user }}</p>
+                    {% if auction.price %}
+                        <p class="product-page-price"><b>Price: US ${{ auction.price }}</b></p>
+                    {% else %}
+                        <p class="product-page-price"><b>Price: US Not Specified</b></p>
+                    {% endif %}
+                    {% if user == bid.user %}
                         {% if auction.winner is not None %}
-                            {% if bid.user == user %}
-                                <div class="input-group-prepend">
-                                    <button disabled class="btn bg-success disabled text-light" type="submit">Winner
-                                    </button>
-                                </div>
-                                <input disabled type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" class="form-control"
-                                       name="bid" placeholder="Your won with a bid of: ${{ bid.amount }}">
-                            {% else %}
-                                <div class="input-group-prepend">
-                                    <button disabled class="btn bg-danger disabled text-light" type="submit">Lot Sold
-                                    </button>
-                                </div>
-                                <input disabled type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" class="form-control"
-                                       name="bid" placeholder="Highest bid: ${{ bid.amount }}">
-                            {% endif %}
+                            <h5 class="product-page-bid">{{ auction.bid_counter }} Bid(s) in total.<span>Congratulations, {{ bid.user }}! 🎊</span></h5>
                         {% else %}
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary bg-info text-light" type="submit">Bid Now!</button>
-                            </div>
-                            <input required type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" class="form-control"
-                                   name="bid" placeholder="Current Bid: ${{ bid.amount }}">
+                            <h5 class="product-page-bid">{{ auction.bid_counter }} Bid(s) so far.<span>Your bid is the current bid.</span></h5>
                         {% endif %}
-                    </div>
-                </form>
+                    {% else %}
+                        <h5 class="product-page-bid">{{ auction.bid_counter }} Bid(s) so far.</h5>
+                    {% endif %}
+                    <p>Current Bid: <strong>${{ bid.amount }}</strong><p>
+                    {% if auction.winner is None %}
+                        <p>Status: <strong>Available</strong></p>
+                    {% else %}
+                        <p>Status: <strong style="color: #c94c4c;">Sold</strong></p>
+                    {% endif %}
+                    {% if not auction.user == user %}
+                        <form action="{% url 'update_bid' bid.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                {% if auction.winner is not None %}
+                                    {% if bid.user == user %}
+                                        <div class="input-group-prepend">
+                                            <input disabled class="form-control" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Your won with a bid of: ${{ bid.amount }}">
+                                            <button disabled class="button-offer" type="submit">Winner</button>
+                                        </div>
+                                    {% else %}
+                                        <div class="input-group-prepend">
+                                            <input disabled class="form-control" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Highest bid: ${{ bid.amount }}">
+                                            <button disabled class="button-offer" type="submit">Lot Sold</button>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="input-group-prepend">
+                                        <input required class="form-control" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Current Bid: ${{ bid.amount }}">
+                                        <button class="button-offer" type="submit">Bid Now!</button>
+                                    </div> 
+                                {% endif %}
+                            </div>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'close_bid' bid.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <input disabled type="text" class="form-control" placeholder="Last bid: {{ bid.user }} (${{ bid.amount }})">
+                                    <button class="button-offer" type="submit">Close Bid</button>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="product-page-description">
+            <p>Created at: <strong>{{ auction.created_at }}</strong></p>
+            <p>Last Updated: <strong>{{ bid.created_at }}</strong></p>
+            {% if auction.category %}
+                <p>Category: <strong>{{ auction.category | title }}</strong></p>
             {% else %}
-                <form action="{% url 'close_bid' bid.id %}" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary bg-danger text-light" type="submit">Close Bid
-                            </button>
-                        </div>
-                        <input disabled type="text" class="form-control"
-                               placeholder="Last bid: {{ bid.user }} (${{ bid.amount }})">
-                    </div>
-                </form>
+                <p>Category: <strong>Not Listed.</strong></p>
             {% endif %}
-
-            <h5 class="text-muted pt-3">Comments:</h5>
+            <div style="margin-top: 2em;">
+                <p>Description:</p>
+                <p>{{ auction.description }}</p>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid #c7c7c7;">
+            <h5 style="margin-bottom: 10px;">Comments:</h5>
             <form action="{% url 'add_comment' auction.id %}" class="form-group" method="POST">
                 {% csrf_token %}
                 {{ comment_form }}
-                <input class="btn btn-lg btn-outline-secondary" type="submit" value="Add comment">
+                <input class="button-comment" type="submit" value="Add comment">
             </form>
-            <hr>
         </div>
-
         {% for comment in comments %}
             <div class="card mb-3">
                 <div class="card-header">
