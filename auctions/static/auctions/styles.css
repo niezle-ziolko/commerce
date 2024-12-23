@@ -1,0 +1,132 @@
+@font-face {
+    font-family: 'MarketSans';
+    src: url('/static/auctions/MarketSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    display: swap;
+}
+@font-face {
+    font-family: 'MarketSans';
+    src: url('/static/auctions/MarketSans-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    display: swap;
+}
+body {
+    font-family: MarketSans;
+    margin: 0;
+    background-color: white;
+}
+header {
+    display: flex;
+    border-top: 1px solid #c7c7c7;
+    border-bottom: 1px solid #c7c7c7;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 7%;
+    padding-right: 7%;
+}
+section {
+    margin-block-start: 1em;
+    padding-left: 7%;
+    padding-right: 7%;
+}
+h2 {
+    color: #191919;
+    font-size: 22px;
+    line-height: 28px;
+}
+a {
+    color: #191919;
+    text-decoration: none;
+    font-weight: normal;
+}
+a:hover {
+    text-decoration: underline;
+}
+::marker {
+    color: transparent;
+}
+.login-status {
+    font-size: 12px;
+    padding-left: 7%;
+    padding-right: 7%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.nav {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    gap: 75px;
+    align-items: center;
+}
+a.nav-link {
+    color: #191919;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+a.nav-link:hover {
+    color: #382aef;
+}
+.badge {
+    background-color: #382aef;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    padding: 7px;
+    font-size: 10px;
+}
+.products-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2%;
+}
+.row {
+    width: 240px;
+    margin-bottom: 2%;
+    position: relative;
+}
+.text-danger {
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid #c7c7c7;
+    border-radius: 25px;
+    padding: 8px;
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    color: #c94c4c;
+    right: 10px;
+    top: 10px;
+}
+.text-danger:hover {
+    text-decoration: none;
+}
+.product-image {
+    border-radius: 16px;
+    width: 240px;
+    height: 240px;
+    object-fit: cover;
+}
+.product-list-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: .875rem;
+    overflow-wrap: anywhere;
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    line-height: 20px;
+    min-height: 36px;
+    margin-bottom: 0;
+}
+.price {
+    margin-top: 6px;
+    font-weight: bold;
+}
+.text-success {
+    text-align: center;
+}
