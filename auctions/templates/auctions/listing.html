@@ -73,7 +73,13 @@
                 </div>
             </div>
         </div>
-        <div class="product-page-description">
+        <div class="tabs">
+        <div class="tablist">
+            <div class="tab">
+                <p class="tab-info">About this item</p>
+            </div>
+        </div>
+        <div class="tabs-content">
             <p>Created at: <strong>{{ auction.created_at }}</strong></p>
             <p>Last Updated: <strong>{{ bid.created_at }}</strong></p>
             {% if auction.category %}
@@ -85,6 +91,10 @@
                 <p>Description:</p>
                 <p>{{ auction.description }}</p>
             </div>
+        </div>
+        </div>
+        <div class="product-page-description">
+            
         </div>
         <div style="border-bottom: 1px solid #c7c7c7;">
             <h5 style="margin-bottom: 10px;">Comments:</h5>
