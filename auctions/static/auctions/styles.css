@@ -49,6 +49,8 @@ textarea {
     background-color: #f7f7f7;
     font-size: 0.875rem;
     padding: 10px;
+    width: 100%;
+    resize: vertical;
 }
 a:hover {
     text-decoration: underline;
@@ -214,7 +216,8 @@ button.button-offer:hover, button.button-offer:active, input.button-comment:hove
     position: relative;
     border: 1px solid #e5e5e5;
     border-bottom: 0;
-    border-radius: 3px;
+    border-radius: 3px 3px 0px 0px;
+    background-color: white;
 }
 .tab-info {
     margin: 0;
@@ -223,8 +226,75 @@ button.button-offer:hover, button.button-offer:active, input.button-comment:hove
     color: #3665f3;
     text-align: center;
 }
-.product-page-description {
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
+.tab-content {
+    border: 1px solid #e5e5e5;
+    margin-top: -1px;
+    padding: 20px 20px 20px 15px;
+    border-radius: 0px 3px 3px 3px;
+}
+.product-attribute {
+    font-size: .875rem;
+    color: #707070;
+}
+.comments {
+    background-color: #f7f7f7;
+    padding: 48px;
     margin-top: 1em;
+    margin-bottom: 1em;
+    display: flex;
+}
+.comment-form {
+    width: 33%;
+    padding-right: 48px;
+    border-right: 1px solid #e5e5e5;
+}
+.comment-card {
+    width: 67%;
+    padding-left: 48px;
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.comment-author {
+    font-size: .75rem;
+    color: #707070;
+    margin: 0;
+}
+.card-body {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    word-break: break-word;
+}
+.login-form {
+    display: grid;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.login-title {
+    margin-bottom: 0;
+    line-height: 32px;
+    padding-bottom: 8px;
+}
+.form-box {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    width: 350px;
+}
+.error {
+    color: #c94c4c;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.register-box {
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    display: grid;
 }
