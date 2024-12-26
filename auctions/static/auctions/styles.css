@@ -43,7 +43,7 @@ a {
     font-weight: normal;
 }
 textarea {
-    border-color: #e5e5e5;
+    border-color: #8f8f8f;
     border-radius: 8px;
     border-width: 1px;
     background-color: #f7f7f7;
@@ -64,7 +64,7 @@ a.nav-link:hover {
     color: #382aef;
 }
 input.form-control {
-    border-color: #e5e5e5;
+    border-color: #8f8f8f;
     border-radius: 8px;
     border-width: 1px;
     background-color: #f7f7f7;
@@ -95,6 +95,18 @@ button.button-offer {
     min-height: 48px;
     border: 1px solid #3665f3;
     margin-top: 1em;
+}
+button.filter-button {
+    font-size: 1rem;
+    border-radius: 25px;
+    font-weight: bold;
+    padding: 7px 20px;
+    cursor: pointer;
+    background-color: #3665f3;
+    color: white;
+    min-height: auto;
+    border: 1px solid #3665f3;
+    margin-left: 10px;
 }
 button.button-offer:hover, button.button-offer:active, input.button-comment:hover, input.button-comment:active {
     filter: brightness(92%);
@@ -297,4 +309,9 @@ button.button-offer:hover, button.button-offer:active, input.button-comment:hove
     justify-content: center;
     align-items: center;
     display: grid;
+}
+.filter-form {
+    align-items: center;
+    display: flex;
+    margin-bottom: 1em;
 }

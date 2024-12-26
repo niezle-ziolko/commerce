@@ -148,9 +148,14 @@ def watchlist(request):
 def watch(request, id):
     auction = get_object_or_404(AuctionListing, id=id)
     request.user.watchlist.add(auction)
-    request.user.watchlist_counter += 1
+    if request.user.watchlist.count() == 0:
+        request.user.watchlist_counter = 0
+    else:
+        request.user.watchlist_counter = request.user.watchlist.count()
+    
     request.user.save()
     return HttpResponseRedirect(reverse('index'))
+
 
 
 @login_required(login_url='auctions/login.html')
@@ -170,8 +175,10 @@ def categories(request):
 
 def filter(request):
     q = request.GET['category'].lower()
+    category_name = q.capitalize()
     return render(request, 'auctions/category.html', {
-        'listings': AuctionListing.objects.filter(category=q)
+        'listings': AuctionListing.objects.filter(category=q),
+        'category': category_name
     })
 
 

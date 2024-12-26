@@ -8,8 +8,7 @@ class AuctionListingForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'form-control form-group',
             'placeholder': 'Give it a title'
-        }
-        )
+        })
     )
     description = forms.CharField(
         label='Description',
@@ -18,8 +17,7 @@ class AuctionListingForm(forms.Form):
             'class': 'form-control form-group',
             'placeholder': 'Tell more about the product',
             'rows': '3'
-        }
-        )
+        })
     )
     price = forms.DecimalField(
         label='Price',
@@ -31,8 +29,7 @@ class AuctionListingForm(forms.Form):
             'min': '0.01',
             'max': '999999999.99',
             'step': '0.01'
-        }
-        )
+        })
     )
     starting_bid = forms.DecimalField(
         label='Starting Bid',
@@ -43,8 +40,7 @@ class AuctionListingForm(forms.Form):
             'min': '0.01',
             'max': '99999999999.99',
             'step': '0.01'
-        }
-        )
+        })
     )
     category = forms.CharField(
         label='Category',
@@ -53,8 +49,7 @@ class AuctionListingForm(forms.Form):
             'class': 'form-control form-group',
             'autocomplete': 'on',
             'placeholder': 'Category (optional)'
-        }
-        )
+        })
     )
     image_url = forms.URLField(
         label='Image URL',
@@ -63,8 +58,7 @@ class AuctionListingForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'form-control form-group',
             'placeholder': 'Image URL (optional)',
-        }
-        )
+        })
     )
 
     def clean_starting_bid(self):
@@ -87,8 +81,7 @@ class CommentForm(forms.Form):
             'class': 'form-control-md lead form-group',
             'rows': '3',
             'cols': '100'
-        }
-        )
+        })
     )
 
     def clean_comment(self):
