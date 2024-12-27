@@ -64,6 +64,7 @@ textarea {
     font-size: 0.875rem;
     border-color: #8f8f8f;
     background-color: #f7f7f7;
+    font-family: arial;
 }
 input.form-control {
     padding: 10px;
@@ -253,15 +254,16 @@ label {
 }
 .tab {
     width: 150px;
-    border-bottom: 0;
     padding: 12px 0px;
     position: relative;
     margin: 4px -1px 0 0;
     display: inline-block;
     background-color: white;
-    border: 1px solid #e5e5e5;
     border-radius: 3px 3px 0px 0px;
     box-shadow: 4px -1px 0 #f7f7f7;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 .tab-info {
     margin: 0;

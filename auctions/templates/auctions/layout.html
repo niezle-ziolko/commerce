@@ -1,55 +1,71 @@
 {% load static %}
+<!-- Load static template tags for referencing static files -->
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>{% block title %}Auctions{% endblock %}</title>
+        <!-- Page title with a block for customization -->
         <link rel="shortcut icon" type="image/png" href="{% static '/auctions/favicon.ico' %}" />
+        <!-- Favicon for the website -->
         <link rel="preload" href="{% static '/auctions/MarketSans-Regular.woff2' %}" as="font" crossorigin="" type="font/woff">
         <link rel="preload" href="{% static '/auctions/MarketSans-SemiBold.woff2' %}" as="font" crossorigin="" type="font/woff">
+        <!-- Preloading fonts for faster rendering -->
         <link href="{% static '/auctions/styles.css' %}" rel="stylesheet">
+        <!-- Custom stylesheet -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+        <!-- Font Awesome for icons -->
     </head>
     <body>
         <div class="login-status">
+            <!-- Display user's login status -->
             {% if user.is_authenticated %}
                 Hi! You signed in as <strong>{{ user.username }}</strong>.
+                <!-- Message for authenticated users -->
             {% else %}
                 Hi! You not signed in.
+                <!-- Message for guests -->
             {% endif %}
         </div>
         <header>
+            <!-- Website header -->
             <a href="/" aria-label="home" style="align-items: center; display: flex;">
                 <img class="logo" src="/static/auctions/logo.webp" style="width:205px" alt="Ebay">
+                <!-- Logo linking to the homepage -->
             </a>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
-            </li>
-            {% if user.is_authenticated %}
+            <ul class="nav">
+                <!-- Navigation menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                    <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist <span class="badge">{{ user.watchlist_counter }}</span></a>
+                    <a class="nav-link" href="{% url 'categories' %}">Categories</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-        </ul>
+                {% if user.is_authenticated %}
+                    <!-- Authenticated user links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create' %}">Create Listing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'watchlist' %}">Watchlist <span class="badge">{{ user.watchlist_counter }}</span></a>
+                        <!-- Watchlist with a badge showing the item count -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <!-- Guest user links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
         </header>
         <section>
+            <!-- Main content section -->
             {% block body %}
             {% endblock %}
         </section>

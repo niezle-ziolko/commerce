@@ -1,24 +1,27 @@
 {% extends "auctions/layout.html" %}
+<!-- Extends the base layout -->
 
 {% block body %}
-    {% if auction.winner is not None %}
-        {% if user == bid.user %}
-            <h2 class="text-success">Highest bid, you are the winner!</h2>
-        {% endif %}
+    <!-- Body content block -->
+    {% if auction.winner is not None and user == bid.user %}
+        <h2 class="text-success">Highest bid, you are the winner!</h2>
+        <!-- Display message if the user is the winner -->
     {% endif %}
+
     <div style="display: flex; gap: 15px;">
+        <!-- Container for auction details -->
         <div style="width: 50%;">
             <img src="{{ auction.image_url }}" class="product-page-image">
+            <!-- Display the auction image -->
         </div>
         <div style="width: 50%;">
             <div class="project-info-box">
+                <!-- Auction information -->
                 <h3 class="product-page-title">{{ auction.title }}</h3>
                 <p class="product-page-author"><b>Author: </b> {{ auction.user }}</p>
-                {% if auction.price %}
-                    <p class="product-page-price"><b>Price: US ${{ auction.price }}</b></p>
-                {% else %}
-                    <p class="product-page-price"><b>Price: US Not Specified</b></p>
-                {% endif %}
+                <p class="product-page-price"><b>Price: US ${{ auction.price|default:"Not Specified" }}</b></p>
+                <!-- Show price or default message -->
+
                 {% if user == bid.user %}
                     {% if auction.winner is not None %}
                         <h5 class="product-page-bid">{{ auction.bid_counter }} Bid(s) in total.<span>Congratulations, {{ bid.user }}! 🎊</span></h5>
@@ -27,34 +30,26 @@
                     {% endif %}
                 {% else %}
                     <h5 class="product-page-bid">{{ auction.bid_counter }} Bid(s) so far.</h5>
+                    <!-- Show the bid count -->
                 {% endif %}
                 <p>Current Bid: <strong>${{ bid.amount }}</strong><p>
-                {% if auction.winner is None %}
-                    <p>Status: <strong>Available</strong></p>
-                {% else %}
-                    <p>Status: <strong style="color: #c94c4c;">Sold</strong></p>
-                {% endif %}
+                <p>Status: <strong>{{ auction.winner|yesno:"Sold,Available" }}</strong></p>
+                <!-- Show auction status -->
+
                 {% if not auction.user == user %}
                     <form action="{% url 'update_bid' bid.id %}" method="POST">
                         {% csrf_token %}
                         <div>
                             {% if auction.winner is not None %}
-                                {% if bid.user == user %}
-                                    <div class="input-group-prepend">
-                                        <input disabled class="form-control product" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Your won with a bid of: ${{ bid.amount }}">
-                                        <button disabled class="button-offer" type="submit">Winner</button>
-                                    </div>
-                                {% else %}
-                                    <div class="input-group-prepend">
-                                        <input disabled class="form-control product" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Highest bid: ${{ bid.amount }}">
-                                        <button disabled class="button-offer" type="submit">Lot Sold</button>
-                                    </div>
-                                {% endif %}
+                                <div class="input-group-prepend">
+                                    <input disabled class="form-control product" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Highest bid: ${{ bid.amount }}">
+                                    <button disabled class="button-offer" type="submit">{{ auction.winner|yesno:"Lot Sold,Winner" }}</button>
+                                </div>
                             {% else %}
                                 <div class="input-group-prepend">
                                     <input required class="form-control product" type="number" min="{{ bid.amount }}" step="0.01" max="99999999999.99" name="bid" placeholder="Current Bid: ${{ bid.amount }}">
                                     <button class="button-offer" type="submit">Bid Now!</button>
-                                </div> 
+                                </div>
                             {% endif %}
                         </div>
                     </form>
@@ -72,7 +67,9 @@
             </div>
         </div>
     </div>
+
     <div style="margin-top: 1em;">
+        <!-- Section for item details -->
         <div class="tab-list">
             <div class="tab">
                 <p class="tab-info">About this item</p>
@@ -88,7 +85,7 @@
                         </td>
                     </tr>
                 </thead>
-                <tbody >
+                <tbody>
                     <tr>
                         <td class="product-attribute">Created at:</td>
                         <td>{{ auction.created_at }}</td>
@@ -98,13 +95,8 @@
                         <td>{{ bid.created_at }}</td>
                     </tr>
                     <tr>
-                        {% if auction.category %}
-                            <td class="product-attribute">Category:</td>
-                            <td>{{ auction.category | title }}</td>
-                        {% else %}
-                            <td class="product-attribute">Category:</td>
-                            <td>Not listed.</td>
-                        {% endif %}
+                        <td class="product-attribute">Category:</td>
+                        <td>{{ auction.category|default:"Not listed." }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -114,7 +106,9 @@
             </div>
         </div>
     </div>
+
     <div class="comments">
+        <!-- Section for comments -->
         <div class="comment-form">
             <label>Comments:</label>
             <form action="{% url 'add_comment' auction.id %}" class="form-group" method="POST">
@@ -143,3 +137,4 @@
         </div>
     </div>
 {% endblock %}
+<!-- End body block -->

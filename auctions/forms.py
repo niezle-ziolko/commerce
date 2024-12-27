@@ -1,6 +1,7 @@
 from django import forms
 
 class AuctionListingForm(forms.Form):
+    # Form field for the title of the auction listing
     title = forms.CharField(
         label='Title',
         required=True,
@@ -9,6 +10,8 @@ class AuctionListingForm(forms.Form):
             'placeholder': 'Give it a title'
         })
     )
+
+    # Form field for the category of the auction listing (optional)
     category = forms.CharField(
         label='Category',
         required=False,
@@ -18,6 +21,8 @@ class AuctionListingForm(forms.Form):
             'placeholder': 'Category (optional)'
         })
     )
+
+    # Form field for the estimated price of the item (optional)
     price = forms.DecimalField(
         label='Price',
         required=False,
@@ -30,6 +35,8 @@ class AuctionListingForm(forms.Form):
             'step': '0.01'
         })
     )
+
+    # Form field for the starting bid (required)
     starting_bid = forms.DecimalField(
         label='Starting Bid',
         required=True,
@@ -41,6 +48,8 @@ class AuctionListingForm(forms.Form):
             'step': '0.01'
         })
     )
+
+    # Form field for the image URL of the item (optional)
     image_url = forms.URLField(
         label='Image URL',
         required=False,
@@ -50,6 +59,8 @@ class AuctionListingForm(forms.Form):
             'placeholder': 'Image URL (optional)',
         })
     )
+
+    # Form field for the description of the item (required)
     description = forms.CharField(
         label='Description',
         required=True,
@@ -60,19 +71,20 @@ class AuctionListingForm(forms.Form):
         })
     )
 
+    # Custom validation for the starting_bid field
     def clean_starting_bid(self):
         amount = float(self.cleaned_data.get('starting_bid'))
         if isinstance(amount, float) and amount > 0:
             return amount
-        print(amount)
         raise forms.ValidationError('Should be a number larger than zero!')
 
+    # Custom processing for the category field to return lowercase value
     def clean_category(self):
         category = self.cleaned_data.get('category')
         return category.lower()
 
-
 class CommentForm(forms.Form):
+    # Form field for the comment text (required)
     text = forms.CharField(
         label='',
         required=True,
@@ -83,6 +95,7 @@ class CommentForm(forms.Form):
         })
     )
 
+    # Custom validation for the text field
     def clean_comment(self):
         text = self.cleaned_data.get('text')
         if len(text) > 0:

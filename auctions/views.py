@@ -18,13 +18,10 @@ def index(request):
 
 def login_view(request):
     if request.method == "POST":
-
-        # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
 
-        # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -45,16 +42,14 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+
         if password != confirmation:
             return render(request, "auctions/register.html", {
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
@@ -68,136 +63,129 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-# ======================================================================================================================
-@login_required(login_url='auctions/login.html')
+@login_required
 def create(request):
     return render(request, "auctions/create.html", {
         'form': AuctionListingForm()
     })
 
 
-@login_required(login_url='auctions/login.html')
+@login_required
 def insert(request):
     form = AuctionListingForm(request.POST)
     if form.is_valid():
         auction = AuctionListing(user=request.user, **form.cleaned_data)
-        if not auction.image_url:
-            auction.image_url = 'https://i.imghippo.com/files/bQyI7776Dg.webp'
         auction.save()
-        starting_bid = auction.starting_bid
-        bid = Bid(amount=starting_bid, user=request.user, auction=auction)
+        bid = Bid(amount=auction.starting_bid, user=request.user, auction=auction)
         bid.save()
-        print("auction:" + auction.image_url)
         return HttpResponseRedirect(reverse('index'))
     else:
-        return render(request, 'auctions/create.html', {
+        return render(request, "auctions/create.html", {
             'form': form,
             'error': form.errors
         })
 
 
 def listing(request, id):
-    current = AuctionListing.objects.get(pk=id)
-    bid = get_object_or_404(Bid, auction=current)
-    comments = Comment.objects.filter(auction=current)
-    print("here:" + AuctionListing.objects.get(pk=id).image_url)
-    return render(request, 'auctions/listing.html', {
-        'auction': current,
-        'user': request.user,
+    auction = get_object_or_404(AuctionListing, pk=id)
+    bid = get_object_or_404(Bid, auction=auction)
+    comments = Comment.objects.filter(auction=auction)
+    return render(request, "auctions/listing.html", {
+        'auction': auction,
         'bid': bid,
         'comments': comments,
         'comment_form': CommentForm()
     })
 
 
-@login_required(login_url='auctions/login.html')
+@login_required
 def update_bid(request, id):
-    amount = request.POST['bid']
-    if amount:
-        amount = float(amount)
+    try:
+        amount = float(request.POST['bid'])
         auction = get_object_or_404(AuctionListing, id=id)
-        if amount > get_object_or_404(Bid, id=id).amount:
-            bid = get_object_or_404(Bid, id=id)
-            bid.user, bid.amount = request.user, amount
-            bid.save()
+        current_bid = Bid.objects.filter(auction=auction).latest('created_at')
+
+        if amount > current_bid.amount:
+            new_bid = Bid(user=request.user, amount=amount, auction=auction)
+            new_bid.save()
             auction.bid_counter += 1
             auction.save()
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('listing', kwargs={'id': id}))
         else:
-            raise ValidationError('Bid must be greater than current Bid value')
-    else:
-        raise ValidationError('Bid must be greater than current Bid value')
+            return render(request, "auctions/listing.html", {
+                "auction": auction,
+                "message": "Bid must be greater than the current bid."
+            })
+    except ValueError:
+        return render(request, "auctions/listing.html", {
+            "message": "Invalid bid value."
+        })
 
 
-@login_required(login_url='auctions/login.html')
+@login_required
 def close_bid(request, id):
     auction = get_object_or_404(AuctionListing, id=id)
-    auction.active, auction.winner = False, request.user.username
+    auction.active = False
+    highest_bid = Bid.objects.filter(auction=auction).order_by('-amount').first()
+    auction.winner = highest_bid.user.username if highest_bid else None
     auction.save()
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
 
 
-@login_required(login_url='auctions/login.html')
+@login_required
 def watchlist(request):
     return render(request, "auctions/watchlist.html", {
         "watchlist": request.user.watchlist.all()
     })
 
 
-@login_required(login_url='auctions/login.html')
+@login_required
 def watch(request, id):
     auction = get_object_or_404(AuctionListing, id=id)
     request.user.watchlist.add(auction)
-    if request.user.watchlist.count() == 0:
-        request.user.watchlist_counter = 0
-    else:
-        request.user.watchlist_counter = request.user.watchlist.count()
-    
+    request.user.watchlist_counter = request.user.watchlist.count()
     request.user.save()
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
 
 
-
-@login_required(login_url='auctions/login.html')
+@login_required
 def unwatch(request, id):
     auction = get_object_or_404(AuctionListing, id=id)
     request.user.watchlist.remove(auction)
-    request.user.watchlist_counter -= 1
+    request.user.watchlist_counter = request.user.watchlist.count()
     request.user.save()
-    if '/unwatch/' in request.path:
-        return HttpResponseRedirect(reverse('index'))
-    return HttpResponseRedirect(reverse('wishlist'))
+    return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
 
 
 def categories(request):
-    return render(request, "auctions/categories.html")
-
-
-def filter(request):
-    q = request.GET['category'].lower()
-    category_name = q.capitalize()
-    return render(request, 'auctions/category.html', {
-        'listings': AuctionListing.objects.filter(category=q),
-        'category': category_name
+    return render(request, "auctions/categories.html", {
+        "categories": AuctionListing.objects.values_list('category', flat=True).distinct()
     })
 
 
+def filter(request):
+    category = request.GET.get("category", "").lower()
+    listings = AuctionListing.objects.filter(category=category)
+    return render(request, "auctions/category.html", {
+        "listings": listings,
+        "category": category.capitalize()
+    })
+
+
+@login_required
 def add_comment(request, id):
-    anonymous = User.first_name
-    if request.user is not anonymous:
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            f = form.cleaned_data
-            comment = Comment(
-                user=request.user,
-                auction=get_object_or_404(AuctionListing, id=id),
-                **f
-            )
-            comment.save()
-            return HttpResponseRedirect(reverse('listing', kwargs={
-                'id': id
-            }))
-    else:
-        return render(request, 'auctions/login.html', {
-            'message': 'Must be logged in to be able to comment!'
-        })
+    auction = get_object_or_404(AuctionListing, id=id)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = Comment(
+            user=request.user,
+            auction=auction,
+            **form.cleaned_data
+        )
+        comment.save()
+        return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
+    return render(request, "auctions/listing.html", {
+        "auction": auction,
+        "comment_form": form,
+        "message": "Invalid comment."
+    })
