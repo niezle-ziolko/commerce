@@ -82,7 +82,7 @@ def insert(request):
     if form.is_valid():
         auction = AuctionListing(user=request.user, **form.cleaned_data)
         if not auction.image_url:
-            auction.image_url = 'https://user-images.githubusercontent.com/52632898/161646398-6d49eca9-267f-4eab-a5a7-6ba6069d21df.png'
+            auction.image_url = 'https://i.imghippo.com/files/bQyI7776Dg.webp'
         auction.save()
         starting_bid = auction.starting_bid
         bid = Bid(amount=starting_bid, user=request.user, auction=auction)

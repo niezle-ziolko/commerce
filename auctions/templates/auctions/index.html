@@ -15,21 +15,21 @@
                     </a>
                 {% endif %}
                 <a href="{% url 'listing' item.id %}">
-                    <img class="product-list-image" src="{{ item.image_url }}" alt="{{ item.title }}">
+                    <img class="product-list-image" src="{{ item.image_url }}" alt="{{ item.title }}"> {# Display the item's image #}
                 </a>
                 <div>
                     <h3 class="product-list-title">
-                        <a href="{% url 'listing' item.id %}">{{ item.title }}</a>
+                        <a href="{% url 'listing' item.id %}">{{ item.title }}</a> {# Display the item's title as a link #}
                     </h3>
                     {% if item.price %}
-                        <div class="product-list-price">${{ item.price }}</div>
+                        <div class="product-list-price">${{ item.price }}</div> {# Display the item's price if available #}
                     {% else %}
-                        <div class="product-list-price">Not specified</div>
+                        <div class="product-list-price">Not specified</div> {# Indicate that the price is not specified #}
                     {% endif %}
                     {% if item.winner is None %}
-                        <div>Available</div>
+                        <div>Available</div> {# Indicate that the item is available for purchase #}
                     {% else %}
-                        <div>Sold</div>
+                        <div>Sold</div> {# Indicate that the item has been sold #}
                     {% endif %}
                 </div>
             </div>
