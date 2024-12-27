@@ -1,6 +1,5 @@
 from django import forms
 
-
 class AuctionListingForm(forms.Form):
     title = forms.CharField(
         label='Title',
@@ -10,13 +9,13 @@ class AuctionListingForm(forms.Form):
             'placeholder': 'Give it a title'
         })
     )
-    description = forms.CharField(
-        label='Description',
-        required=True,
-        widget=forms.Textarea(attrs={
+    category = forms.CharField(
+        label='Category',
+        required=False,
+        widget=forms.TextInput(attrs={
             'class': 'form-control form-group',
-            'placeholder': 'Tell more about the product',
-            'rows': '3'
+            'autocomplete': 'on',
+            'placeholder': 'Category (optional)'
         })
     )
     price = forms.DecimalField(
@@ -42,15 +41,6 @@ class AuctionListingForm(forms.Form):
             'step': '0.01'
         })
     )
-    category = forms.CharField(
-        label='Category',
-        required=False,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control form-group',
-            'autocomplete': 'on',
-            'placeholder': 'Category (optional)'
-        })
-    )
     image_url = forms.URLField(
         label='Image URL',
         required=False,
@@ -58,6 +48,15 @@ class AuctionListingForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'form-control form-group',
             'placeholder': 'Image URL (optional)',
+        })
+    )
+    description = forms.CharField(
+        label='Description',
+        required=True,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control form-group',
+            'placeholder': 'Tell more about the product',
+            'rows': '3'
         })
     )
 
@@ -78,7 +77,7 @@ class CommentForm(forms.Form):
         label='',
         required=True,
         widget=forms.Textarea(attrs={
-            'class': 'form-control-md lead form-group',
+            'class': 'form-control comment',
             'rows': '3',
             'cols': '100'
         })

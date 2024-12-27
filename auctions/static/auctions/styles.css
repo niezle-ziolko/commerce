@@ -49,7 +49,6 @@ textarea {
     background-color: #f7f7f7;
     font-size: 0.875rem;
     padding: 10px;
-    width: 100%;
     resize: vertical;
 }
 a:hover {
@@ -59,6 +58,9 @@ a.nav-link {
     color: #191919;
     transition: all 0.3s;
     text-decoration: none;
+    align-items: center;
+    display: flex;
+    gap: 5px;
 }
 a.nav-link:hover {
     color: #382aef;
@@ -70,9 +72,8 @@ input.form-control {
     background-color: #f7f7f7;
     font-size: 0.875rem;
     padding: 10px;
-    width: 25%;
 }
-input.button-comment {
+button.button-comment {
     font-size: 15px;
     border-radius: 25px;
     font-weight: bold;
@@ -96,7 +97,7 @@ button.button-offer {
     border: 1px solid #3665f3;
     margin-top: 1em;
 }
-button.filter-button {
+button.button-filter {
     font-size: 1rem;
     border-radius: 25px;
     font-weight: bold;
@@ -108,11 +109,37 @@ button.filter-button {
     border: 1px solid #3665f3;
     margin-left: 10px;
 }
-button.button-offer:hover, button.button-offer:active, input.button-comment:hover, input.button-comment:active {
+button.button-create {
+    font-size: 1rem;
+    border-radius: 25px;
+    font-weight: bold;
+    padding: 13px 30px;
+    cursor: pointer;
+    background-color: #3665f3;
+    color: white;
+    min-height: 48px;
+    border: 1px solid #3665f3;
+    margin-top: 1em;
+}
+button.button-offer:hover,
+button.button-offer:active,
+button.button-comment:hover,
+button.button-comment:active,
+button.button-filter:hover,
+button.button-filter:active,
+button.button-create:hover,
+button.button-create:active {
     filter: brightness(92%);
 }
 ::marker {
     color: transparent;
+}
+label {
+    display: block;
+    font-size: 0.83em;
+    margin-block-start: 1.67em;
+    font-weight: bold;
+    margin-block-end: 10px;
 }
 .login-status {
     font-size: 12px;
@@ -314,4 +341,20 @@ button.button-offer:hover, button.button-offer:active, input.button-comment:hove
     align-items: center;
     display: flex;
     margin-bottom: 1em;
+}
+.form-control.product {
+    width: 25%;
+}
+.form-control.comment {
+    width: 100%;
+}
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+.form-create {
+    width: 50%;
+}
+input.form-control.form-group, textarea.form-control.form-group {
+    width: -webkit-fill-available;
 }

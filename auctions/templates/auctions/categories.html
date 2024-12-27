@@ -3,7 +3,7 @@
 {% block body %}
     <h2>Categories</h2>
     <form class="filter-form" action="{% url 'filter' %}">
-        <input class="form-control" type="text" name="category" placeholder="Enter a category like cards, vehicle, etc..." autofocus>
-        <button class="filter-button" type="submit">Filter</button>
+        <input class="form-control product" type="text" name="category" placeholder="Enter a category like food, home, etc..." autofocus>
+        <button class="button-filter" type="submit">Filter</button>
     </form>
 {% endblock %}
