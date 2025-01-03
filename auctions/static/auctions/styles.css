@@ -5,6 +5,7 @@
     font-style: normal;
     display: swap;
 }
+
 @font-face {
     font-family: 'MarketSans';
     src: url('/static/auctions/MarketSans-SemiBold.woff2') format('woff2');
@@ -12,12 +13,14 @@
     font-style: normal;
     display: swap;
 }
+
 body {
     margin: 0;
     color: #191919;
     font-family: MarketSans;
     background-color: white;
 }
+
 header {
     display: flex;
     padding-left: 7%;
@@ -27,24 +30,29 @@ header {
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
 }
+
 section {
     padding-left: 7%;
     padding-right: 7%;
     margin-block-start: 1em;
 }
+
 h2 {
     font-size: 22px;
     color: #191919;
     line-height: 28px;
 }
+
 a {
     color: #191919;
     font-weight: normal;
     text-decoration: none;
 }
+
 a:hover {
     text-decoration: underline;
 }
+
 a.nav-link {
     gap: 5px;
     display: flex;
@@ -53,9 +61,11 @@ a.nav-link {
     transition: all 0.3s;
     text-decoration: none;
 }
+
 a.nav-link:hover {
     color: #382aef;
 }
+
 textarea {
     padding: 10px;
     resize: vertical;
@@ -66,6 +76,7 @@ textarea {
     background-color: #f7f7f7;
     font-family: arial;
 }
+
 input.form-control {
     padding: 10px;
     border-width: 1px;
@@ -74,11 +85,13 @@ input.form-control {
     border-color: #8f8f8f;
     background-color: #f7f7f7;
 }
+
 input.form-control.form-group, textarea.form-control.form-group {
     width: 100%;
     width: fill-available;
     width: -webkit-fill-available;
 }
+
 button.button-comment {
     color: white;
     font-size: 15px;
@@ -91,6 +104,7 @@ button.button-comment {
     background-color: #3665f3;
     border: 1px solid #3665f3;
 }
+
 button.button-offer {
     color: white;
     font-size: 1rem;
@@ -103,6 +117,7 @@ button.button-offer {
     border: 1px solid #3665f3;
     background-color: #3665f3;
 }
+
 button.button-filter {
     color: white;
     font-size: 1rem;
@@ -115,6 +130,7 @@ button.button-filter {
     background-color: #3665f3;
     border: 1px solid #3665f3;
 }
+
 button.button-create {
     color: white;
     font-size: 1rem;
@@ -127,6 +143,7 @@ button.button-create {
     border: 1px solid #3665f3;
     background-color: #3665f3;
 }
+
 button.button-offer:hover,
 button.button-offer:active,
 button.button-comment:hover,
@@ -137,9 +154,11 @@ button.button-create:hover,
 button.button-create:active {
     filter: brightness(92%);
 }
+
 ::marker {
     color: transparent;
 }
+
 label {
     display: block;
     font-size: 0.83em;
@@ -147,6 +166,7 @@ label {
     margin-block-end: 10px;
     margin-block-start: 1.67em;
 }
+
 .login-status {
     margin-top: 6px;
     font-size: 12px;
@@ -154,6 +174,7 @@ label {
     padding-right: 7%;
     margin-bottom: 6px;
 }
+
 .nav {
     gap: 75px;
     width: 100%;
@@ -161,6 +182,7 @@ label {
     align-items: center;
     justify-content: end;
 }
+
 .badge {
     padding: 7px;
     color: white;
@@ -169,16 +191,19 @@ label {
     text-align: center;
     background-color: #3665f3;
 }
+
 .products-list {
     gap: 30px;
     display: flex;
     flex-wrap: wrap;
 }
+
 .row {
     width: 240px;
     position: relative;
     margin-bottom: 30px;
 }
+
 .text-danger {
     top: 10px;
     z-index: 1;
@@ -192,15 +217,18 @@ label {
     background-color: white;
     border: 1px solid #e5e5e5;
 }
+
 .text-danger:hover {
     text-decoration: none;
 }
+
 .product-list-image {
     width: 240px;
     height: 240px;
     object-fit: cover;
     border-radius: 16px;
 }
+
 .product-list-title {
     line-clamp: 2;
     overflow: hidden;
@@ -215,19 +243,23 @@ label {
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
 }
+
 .product-list-price {
     margin-top: 6px;
     font-weight: bold;
 }
+
 .text-success {
     text-align: center;
 }
+
 .product-page-image {
     width: 100%;
     max-height: 562px;
     object-fit: contain;
     border-radius: 16px;
 }
+
 .product-page-title {
     margin-bottom: 0;
     word-wrap: normal;
@@ -236,22 +268,27 @@ label {
     line-height: normal;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .product-page-author {
     margin-bottom: 0;
     padding-bottom: 1em;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .product-page-price {
     margin-bottom: 0;
     font-size: 1.5rem;
 }
+
 .product-page-bid {
     margin: 0;
     color: #707070;
 }
+
 .input-group-prepend {
     display: grid;
 }
+
 .tab {
     width: 150px;
     padding: 12px 0px;
@@ -265,6 +302,7 @@ label {
     border-right: 1px solid #e5e5e5;
     border-top: 1px solid #e5e5e5;
 }
+
 .tab-info {
     margin: 0;
     color: #3665f3;
@@ -272,16 +310,19 @@ label {
     text-align: center;
     font-size: .8125rem;
 }
+
 .tab-content {
     margin-top: -1px;
     border: 1px solid #e5e5e5;
     padding: 20px 20px 20px 15px;
     border-radius: 0px 3px 3px 3px;
 }
+
 .product-attribute {
     color: #707070;
     font-size: .875rem;
 }
+
 .comments {
     display: flex;
     padding: 48px;
@@ -289,76 +330,91 @@ label {
     margin-bottom: 1em;
     background-color: #f7f7f7;
 }
+
 .comment-form {
     width: 33%;
     padding-right: 48px;
     border-right: 1px solid #e5e5e5;
 }
+
 .comment-card {
     width: 67%;
     padding-left: 48px;
 }
+
 .card-header {
     gap: 8px;
     display: flex;
     margin-bottom: 8px;
     align-items: center;
 }
+
 .comment-author {
     margin: 0;
     color: #707070;
     font-size: .75rem;
 }
+
 .card-body {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
     word-break: break-word;
 }
+
 .login-form {
     display: grid;
     text-align: center;
     align-items: center;
     justify-content: center;
 }
+
 .login-title {
     margin-bottom: 0;
     line-height: 32px;
     padding-bottom: 8px;
 }
+
 .form-box {
     gap: 10px;
     width: 350px;
     display: grid;
     justify-content: center;
 }
+
 .error {
     font-size: 14px;
     color: #c94c4c;
     font-weight: bold;
     margin-bottom: 8px;
 }
+
 .register-box {
     width: 50%;
     display: grid;
     align-items: center;
     justify-content: center;
 }
+
 .filter-form {
     display: flex;
     margin-bottom: 1em;
     align-items: center;
 }
+
 .form-control.product {
     width: 25%;
 }
+
 .form-control.comment {
     width: 100%;
 }
+
 .form-row {
     gap: 15px;
     display: flex;
 }
+
 .form-create {
     width: 50%;
 }
