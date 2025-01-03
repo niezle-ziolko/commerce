@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -33,4 +33,7 @@ urlpatterns = [
     
     # Comments
     path("comments/<int:id>", views.add_comment, name="add_comment"),
+
+    # Social login
+    path('auth/', include('social_django.urls', namespace='social'))
 ]

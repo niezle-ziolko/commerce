@@ -1,53 +1,77 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 <!-- Extends the base layout -->
 
 {% block body %}
-    <div style="display: flex;">
-        <!-- Container for the registration content -->
+<div style="display: flex;">
+    <!-- Container for the registration content -->
 
-        <div style="width: 50%;">
-            <!-- Image section -->
-            <img class="logo" src="/static/auctions/register.webp" style="width: 100%; border-radius: 15px;" alt="Register">
-        </div>
+    <div style="width: 50%;">
+        <!-- Image section -->
+        <img class="logo" src="/static/auctions/register.webp" style="width: 100%; border-radius: 15px;" alt="Register">
+    </div>
 
-        <div class="register-box">
-            <!-- Registration form section -->
-            <div>
-                <h2 class="login-title">Create an account</h2>
-                <!-- Registration title -->
+    <div class="register-box">
+        <!-- Registration form section -->
+        
+        <div>
+            <h2 class="login-title">Create an account</h2>
+            <!-- Registration title -->
 
-                {% if message %}
-                    <span class="error">{{ message }}</span>
-                    <!-- Display error message if it exists -->
-                {% endif %}
+            {% if message %}
+                <span class="error">{{ message }}</span>
+                <!-- Display error message if it exists -->
+            {% endif %}
 
-                <form class="form-box" action="{% url 'register' %}" method="post" style="margin-bottom: 1em;">
-                    {% csrf_token %}
-                    <!-- CSRF token for security -->
+            <form class="form-box" action="{% url 'register' %}" method="post" style="margin-bottom: 1em;">
+                {% csrf_token %}
+                <!-- CSRF token for security -->
 
-                    <input class="form-control" autofocus type="text" name="username" placeholder="Username" style="width: 350px;">
+                <div>
+                    <label class="login-label" for="username">Username</label>
+                    <input class="form-control" autofocus type="text" name="username" style="width: 350px;" onfocus="setActiveLabel('username')" oninput="checkInput('username')">
                     <!-- Input for username -->
+                </div>
 
-                    <input class="form-control" type="email" name="email" placeholder="Email Address" style="width: 350px;">
+                <div>
+                    <label class="login-label" for="email-address">Email Address</label>
+                    <input class="form-control" type="email" name="email" style="width: 350px;" onfocus="setActiveLabel('email-address')" oninput="checkInput('email-address')">
                     <!-- Input for email -->
+                </div>
 
-                    <input class="form-control" type="password" name="password" placeholder="Password" style="width: 350px;">
+                <div>
+                    <label class="login-label" for="password">Password</label>
+                    <input class="form-control" type="password" name="password" style="width: 350px;" onfocus="setActiveLabel('password')" oninput="checkInput('password')">
                     <!-- Input for password -->
+                </div>
 
-                    <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password" style="width: 350px;">
+                <div>
+                    <label class="login-label" for="confirm-password">Confirm Password</label>
+                    <input class="form-control" type="password" name="confirmation" style="width: 350px;" onfocus="setActiveLabel('confirm-password')" oninput="checkInput('confirm-password')">
                     <!-- Input for password confirmation -->
+                </div>
 
-                    <button class="button-offer" type="submit">Create account</button>
-                    <!-- Submit button -->
-                </form>
+                <button class="button-offer" type="submit">Create account</button>
+                <!-- Submit button -->
+            </form>
 
-                <span style="font-size: 14px;">
-                    Already have an account? 
-                    <a href="{% url 'login' %}" style="text-decoration: underline;">Log In here.</a>
-                </span>
-                <!-- Link to login page -->
+            <div class="login-space">
+                <hr style="width: 100px;">
+                <span style="font-size: .875em;">or continue with</span>
+                <hr style="width: 100px;">
             </div>
+
+            <span style="font-size: 14px;">
+                Already have an account? 
+                <a href="{% url 'login' %}" style="text-decoration: underline;">Log In here.</a>
+            </span>
+            <!-- Link to login page -->
         </div>
     </div>
+</div>
 {% endblock %}
 <!-- End body block -->
+
+{% block script %}
+<script src="{% static 'auctions/script.js' %}"></script>
+{% endblock %}

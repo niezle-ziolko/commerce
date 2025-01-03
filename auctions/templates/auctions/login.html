@@ -1,36 +1,48 @@
 {% extends "auctions/layout.html" %}
-<!-- Extends the base layout -->
+{% load static %}
 
 {% block body %}
-    <div class="login-form">
-        <!-- Login form container -->
-        <h2 class="login-title">Sign in to your account</h2>
-        <!-- Login title -->
+<div class="login-form">
+    <h2 class="login-title">Sign in to your account</h2>
 
-        {% if message %}
-            <span class="error">{{ message }}</span>
-            <!-- Display error message if it exists -->
-        {% endif %}
+    {% if message %}
+        <span class="error">{{ message }}</span>
+    {% endif %}
 
-        <span style="font-size: 14px; margin-bottom: 2em;">
-            New to _niezle_ziolko? 
-            <a href="{% url 'register' %}" style="text-decoration: underline;">Create account</a>
-        </span>
-        <!-- Link to create a new account -->
+    <span style="font-size: 14px; margin-bottom: 2em;">
+        New to _niezle_ziolko? 
+        <a href="{% url 'register' %}" style="text-decoration: underline;">Create account</a>
+    </span>
 
-        <form class="form-box" action="{% url 'login' %}" method="post">
-            {% csrf_token %}
-            <!-- CSRF token for security -->
+    <form class="form-box" action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label class="login-label" for="username">Username</label>
+            <input id="username" autofocus class="form-control" type="text" name="username" style="width: 350px;" onfocus="setActiveLabel('username')" oninput="checkInput('username')">
+        </div>
+        
+        <div>
+            <label class="login-label" for="password">Password</label>
+            <input id="password" class="form-control" type="password" name="password" style="width: 350px;" onfocus="setActiveLabel('password')" oninput="checkInput('password')">
+        </div>
+        
+        <button class="button-offer" type="submit">Login</button>
+    </form>
 
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username" style="width: 350px;">
-            <!-- Input for username -->
-
-            <input class="form-control" type="password" name="password" placeholder="Password" style="width: 350px;">
-            <!-- Input for password -->
-
-            <button class="button-offer" type="submit">Login</button>
-            <!-- Submit button -->
-        </form>
+    <div class="login-space">
+        <hr style="width: 150px;">
+        <span style="font-size: .875em;">or</span>
+        <hr style="width: 150px;">
     </div>
+    
+
+        <div class="github-login">
+            <a href="{% url 'social:begin' 'github' %}" class="button-offer">Login with GitHub</a>
+        </div>
+</div>
 {% endblock %}
 <!-- End body block -->
+
+{% block script %}
+<script src="{% static 'auctions/script.js' %}"></script>
+{% endblock %}
