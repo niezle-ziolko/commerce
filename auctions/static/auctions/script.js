@@ -41,3 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Nie udało się załadować EmojiButton:', error);
         });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const imageIcon = document.getElementById("image-icon");
+    const imageInput = document.querySelector("input[name='image']");
+
+    if (imageIcon && imageInput) {
+        imageIcon.addEventListener("click", function () {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener("change", function () {
+            if (this.files.length > 0) {
+                alert(`Wybrano plik: ${this.files[0].name}`);
+            }
+        });
+    } else {
+        console.error("Nie znaleziono elementu #image-icon lub input[name='image']");
+    };
+});

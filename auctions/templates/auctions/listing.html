@@ -158,26 +158,4 @@
 
 {% block script %}
 <script src="{% static 'auctions/script.js' %}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Dodaj obsługę kliknięcia dla ikony obrazu
-    const imageIcon = document.getElementById("image-icon");
-    const imageInput = document.querySelector("input[name='image']");
-
-    if (imageIcon && imageInput) {
-        imageIcon.addEventListener("click", function () {
-            imageInput.click(); // Wywołaj kliknięcie na ukrytym input
-        });
-
-        // Opcjonalnie: Aktualizuj ikonę lub dodaj podgląd po wyborze pliku
-        imageInput.addEventListener("change", function () {
-            if (this.files.length > 0) {
-                alert(`Wybrano plik: ${this.files[0].name}`);
-            }
-        });
-    } else {
-        console.error("Nie znaleziono elementu #image-icon lub input[name='image']");
-    }
-});
-</script>
 {% endblock %}
