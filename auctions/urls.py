@@ -1,4 +1,6 @@
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 
@@ -34,6 +36,8 @@ urlpatterns = [
     # Comments
     path("comments/<int:id>", views.add_comment, name="add_comment"),
 
-    # Social login
-    path('auth/', include('social_django.urls', namespace='social'))
+    path('social/', include('social_django.urls', namespace='social'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

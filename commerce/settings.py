@@ -15,6 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -25,7 +28,7 @@ SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-niezleziolko-commerce-tk869ak7vnr.ws-eu117.gitpod.io']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -123,15 +126,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.google.GoogleOAuth2',  # Logowanie przez Google
+    'social_core.backends.facebook.FacebookOAuth2',  # Logowanie przez Facebooka
+    'django.contrib.auth.backends.ModelBackend',  # Standardowe logowanie Django
 )
 
-SOCIAL_AUTH_GITHUB_KEY = 'Ov23liEvQkkrRqShYPRG'
-SOCIAL_AUTH_GITHUB_SECRET = '63acafb2d78aa87b2ef0dc4a7868118deeb80772'
-SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'index'
+# Klucze API Google i Facebook
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'YOUR_GOOGLE_CLIENT_ID'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '3309525312515593'
+SOCIAL_AUTH_FACEBOOK_SECRET = '6ec0aff36f8d560635f9d3d76ead3101'
+
+# Opcjonalne: URL powrotu po logowaniu
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

@@ -82,22 +82,31 @@ class AuctionListingForm(forms.Form):
     def clean_category(self):
         category = self.cleaned_data.get('category')
         return category.lower()
+    
 
 class CommentForm(forms.Form):
-    # Form field for the comment text (required)
     text = forms.CharField(
         label='',
         required=True,
         widget=forms.Textarea(attrs={
             'class': 'form-control comment',
             'rows': '3',
-            'cols': '100'
+            'cols': '100',
+            'id': 'id_comment'
         })
     )
 
-    # Custom validation for the text field
-    def clean_comment(self):
+    image = forms.ImageField(
+        label='Upload an image (optional)',
+        required=False,
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-image',
+            'id': 'id_image'
+        })
+    )
+
+    def clean_text(self):
         text = self.cleaned_data.get('text')
-        if len(text) > 0:
-            return text
-        return self.errors
+        if not text or len(text.strip()) == 0:
+            raise forms.ValidationError("Comment text cannot be empty.")
+        return text

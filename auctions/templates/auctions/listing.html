@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %}
+{% load static %}
 <!-- Extends the base layout -->
 
 {% block body %}
@@ -111,10 +112,23 @@
         <!-- Section for comments -->
         <div class="comment-form">
             <label>Comments:</label>
-            <form action="{% url 'add_comment' auction.id %}" class="form-group" method="POST">
+            <form action="{% url 'add_comment' auction.id %}" class="form-group" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ comment_form }}
-                <button class="button-comment" type="submit">Add comment</button>
+                <div>
+                    {{ comment_form.text }}
+                </div>
+                <div style="display: none;">
+                    {{ comment_form.image }}
+                </div>
+                <div style="justify-content: space-between; display: flex;">
+                    <button class="button-comment" type="submit">Add comment</button>
+                    <div style="align-items: center;display: flex;">
+                        <button id="emoji-button" class="button-emoji" type="button">
+                            <i class="fa-regular fa-face-grin-hearts"></i>
+                        </button>
+                        <i id="image-icon" class="fa-regular fa-image"></i>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="comment-card">
@@ -123,10 +137,13 @@
                 <div>
                     <div class="card-header">
                         <i class="fa-solid fa-circle-plus" style="color: #05823F;"></i>
-                        <p class="comment-author">{{ comment.user }} - {{ comment.created_at }}</p>
+                        <p class="comment-author">{{ comment.user.username }} - {{ comment.created_at }}</p>
                     </div>
                     <div class="card-body">
                         <p>{{ comment.text }}</p>
+                        {% if comment.image %}
+                            <img src="{{ comment.image.url }}" alt="Comment image" style="max-width: 200px; margin-top: 10px;">
+                        {% endif %}
                     </div>
                 </div>
             {% empty %}
@@ -138,3 +155,29 @@
     </div>
 {% endblock %}
 <!-- End body block -->
+
+{% block script %}
+<script src="{% static 'auctions/script.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Dodaj obsługę kliknięcia dla ikony obrazu
+    const imageIcon = document.getElementById("image-icon");
+    const imageInput = document.querySelector("input[name='image']");
+
+    if (imageIcon && imageInput) {
+        imageIcon.addEventListener("click", function () {
+            imageInput.click(); // Wywołaj kliknięcie na ukrytym input
+        });
+
+        // Opcjonalnie: Aktualizuj ikonę lub dodaj podgląd po wyborze pliku
+        imageInput.addEventListener("change", function () {
+            if (this.files.length > 0) {
+                alert(`Wybrano plik: ${this.files[0].name}`);
+            }
+        });
+    } else {
+        console.error("Nie znaleziono elementu #image-icon lub input[name='image']");
+    }
+});
+</script>
+{% endblock %}

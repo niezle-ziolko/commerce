@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
@@ -38,6 +38,8 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 
+User = get_user_model()
+
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
@@ -51,16 +53,19 @@ def register(request):
             })
 
         try:
-            user = User.objects.create_user(username, email, password)
-            user.save()
+            user = User.objects.create_user(username=username, email=email, password=password)
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
             })
+
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
         login(request, user)
+
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
 
 
 @login_required
@@ -175,15 +180,19 @@ def filter(request):
 @login_required
 def add_comment(request, id):
     auction = get_object_or_404(AuctionListing, id=id)
-    form = CommentForm(request.POST)
-    if form.is_valid():
-        comment = Comment(
-            user=request.user,
-            auction=auction,
-            **form.cleaned_data
-        )
-        comment.save()
-        return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
+    if request.method == "POST":
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = Comment(
+                user=request.user,
+                auction=auction,
+                text=form.cleaned_data['text'],
+                image=form.cleaned_data.get('image')
+            )
+            comment.save()
+            return HttpResponseRedirect(reverse("listing", kwargs={"id": id}))
+    else:
+        form = CommentForm()
     return render(request, "auctions/listing.html", {
         "auction": auction,
         "comment_form": form,
