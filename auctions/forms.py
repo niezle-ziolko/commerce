@@ -85,8 +85,9 @@ class AuctionListingForm(forms.Form):
     
 
 class CommentForm(forms.Form):
+    # A required text field for comments with a textarea widget.
     text = forms.CharField(
-        label='',
+        label='',  # No visible label.
         required=True,
         widget=forms.Textarea(attrs={
             'class': 'form-control comment',
@@ -96,6 +97,7 @@ class CommentForm(forms.Form):
         })
     )
 
+    # An optional image upload field with a clearable file input widget.
     image = forms.ImageField(
         label='Upload an image (optional)',
         required=False,
@@ -105,6 +107,7 @@ class CommentForm(forms.Form):
         })
     )
 
+    # Ensure the comment text is not empty or whitespace.
     def clean_text(self):
         text = self.cleaned_data.get('text')
         if not text or len(text.strip()) == 0:

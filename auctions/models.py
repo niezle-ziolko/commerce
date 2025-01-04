@@ -44,7 +44,7 @@ class Comment(models.Model):
     text = models.TextField(blank=True)  # Comment content
     created_at = models.DateTimeField(auto_now_add=True)  # Comment creation date
     auction = models.ForeignKey(AuctionListing, on_delete=models.CASCADE)  # Associated auction listing
-    image = models.ImageField(upload_to='comment/', null=True, blank=True)
+    image = models.ImageField(upload_to='comment/', null=True, blank=True) # Upload media
 
     def __str__(self):
         return f'{self.user}: {self.text}'
