@@ -56,7 +56,5 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert(`Wybrano plik: ${this.files[0].name}`);
             }
         });
-    } else {
-        console.error("Nie znaleziono elementu #image-icon lub input[name='image']");
     };
 });
