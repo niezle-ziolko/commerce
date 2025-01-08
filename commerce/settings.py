@@ -127,18 +127,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.google.GoogleOAuth2',  # Logowanie przez Google
-    'social_core.backends.facebook.FacebookOAuth2',  # Logowanie przez Facebooka
-    'django.contrib.auth.backends.ModelBackend',  # Standardowe logowanie Django
+    'social_core.backends.google.GoogleOAuth2',  # Google login
+    'social_core.backends.facebook.FacebookOAuth2',  # Facebook login
+    'django.contrib.auth.backends.ModelBackend',  # Standard Django login
 )
 
-# Klucze API Google i Facebook
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'YOUR_GOOGLE_CLIENT_ID'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'YOUR_GOOGLE_CLIENT_SECRET'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '3309525312515593'
 SOCIAL_AUTH_FACEBOOK_SECRET = '6ec0aff36f8d560635f9d3d76ead3101'
 
-# Opcjonalne: URL powrotu po logowaniu
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

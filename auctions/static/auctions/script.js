@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         })
         .catch((error) => {
-            console.error('Nie udało się załadować EmojiButton:', error);
+            console.error('EmojiButton failed to load:', error);
         });
 });
 
@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         imageInput.addEventListener("change", function () {
             if (this.files.length > 0) {
-                alert(`Wybrano plik: ${this.files[0].name}`);
-            }
+                alert(`Selected file: ${this.files[0].name}`);
+            };
         });
     };
 });
