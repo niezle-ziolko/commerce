@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'MarketSans';
-    src: url('/static/auctions/MarketSans-Regular.woff2') format('woff2');
+    src: url('/static/auctions/market-sans-regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: 'MarketSans';
-    src: url('/static/auctions/MarketSans-SemiBold.woff2') format('woff2');
+    src: url('/static/auctions/market-sans-semibold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     display: swap;
