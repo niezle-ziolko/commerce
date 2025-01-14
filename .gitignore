@@ -1,0 +1,7 @@
+db.sqlite3
+
+/commerce/__pycache__
+/auctions/__pycache__
+/auctions/migrations/__pycache__
+
+/media/
