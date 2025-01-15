@@ -28,31 +28,31 @@
                     <!-- Display error message if it exists -->
                 {% endif %}
 
-                <form class="form-box" action="{% url 'register' %}" method="post" style="margin-bottom: 1em;">
+                <form class="form-box" action="{% url 'register' %}" method="post" style="margin-bottom: 1em;margin-top: 1em;">
                     {% csrf_token %}
                     <!-- CSRF token for security -->
 
                     <div>
                         <label class="login-label" for="username">Username</label>
-                        <input class="form-control" type="text" name="username" id="username" onfocus="setActiveLabel('username')" oninput="checkInput('username')">
+                        <input class="form-control" type="text" name="username" id="username" required onfocus="setActiveLabel('username')" oninput="checkInput('username')">
                         <!-- Input for username -->
                     </div>
 
                     <div>
                         <label class="login-label" for="email">Email Address</label>
-                        <input class="form-control" type="email" name="email" id="email" onfocus="setActiveLabel('email')" oninput="checkInput('email')">
+                        <input class="form-control" type="email" name="email" id="email" required onfocus="setActiveLabel('email')" oninput="checkInput('email')">
                         <!-- Input for email -->
                     </div>
 
                     <div>
                         <label class="login-label" for="password">Password</label>
-                        <input class="form-control" type="password" name="password" id="password" onfocus="setActiveLabel('password')" oninput="checkInput('password')">
+                        <input class="form-control" type="password" name="password" id="password" required onfocus="setActiveLabel('password')" oninput="checkInput('password')">
                         <!-- Input for password -->
                     </div>
 
                     <div>
                         <label class="login-label" for="confirmation">Confirm Password</label>
-                        <input class="form-control" type="password" name="confirmation" id="confirmation" onfocus="setActiveLabel('confirmation')" oninput="checkInput('confirmation')">
+                        <input class="form-control" type="password" name="confirmation" id="confirmation" required onfocus="setActiveLabel('confirmation')" oninput="checkInput('confirmation')">
                         <!-- Input for password confirmation -->
                     </div>
 
